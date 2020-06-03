@@ -8,44 +8,7 @@ const saltRounds = 12;
 
 const sendEmail = require("../mailer");
 
-// route.post("/login", async (req, res) => {
-//   //1. Retrieve login details and validate
-//   const { username, password } = req.body;
 
-//   //2. Check user match in db
-//   if(username && password){
-//     try {
-//       const user = await User.query()
-//         .select()
-//         .where({ username: username }).limit(1)
-//         .then(function (user) {
-//           if (user.length > 0 ) {
-//             //3. Bcrypt compare
-//             bcrypt.compare(password, user[0].password).then((result) => {
-//               if (result == true) {
-//                 //4. session
-//                 req.session.user = user;
-//                 if (user[0].roleId != 1) {
-              
-//                   res.redirect("/");
-
-//                 } else {
-//                   res.render('loginpage/login', {message:  "Invalid username or password." });
-              
-//                 }
-//               } else {
-//                 return res.redirect("/login");
-//               }
-//             });
-//           }else {
-//             res.render('loginpage/login', {message: "Invalid username or password"});
-//         }
-//         });
-//     } catch (error) {
-//       return res.render('loginpage/login', {message:  "Something went wrong with database" });
-//     }
-//   }
-// });
 route.post("/login", async (req,res) => {
   
   const { username, password } = req.body;
