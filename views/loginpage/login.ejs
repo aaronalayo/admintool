@@ -1,0 +1,33 @@
+<%- include ('../navbarpage/navbar') %>
+    <div class="container row">
+        <div class="jumbotron col-sm-4 pull-center">
+    
+            <form action="/login" method="post">
+                <div>
+                    <br>
+                    <label>Username:</label>
+                    <input id="username" type="text" name="username" placeholder="username"/>
+                </div>   
+                <div>
+                    <br>
+                    <label>Password:</label>
+                    <input id="password" type="password" name="password" placeholder="password"/>
+                </div>
+                <br>
+                <div>
+                    <input id="btn-submit" class="btn btn-primary" type="submit" value="login"/>
+                    
+                </div>
+                <%if(typeof message == "undefined"){%>
+                    <div></div>
+                <% } else { %>
+                    <div class="error"> <%= message%> </div> 
+                <%}%>
+            </form> 
+    <br>     
+    <a href="/forgot">Forgot password ? </a>
+    <%- include ('../footerpage/footer') %>
+
+
+           
+

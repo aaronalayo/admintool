@@ -1,0 +1,51 @@
+
+#logo {
+    width:30%;
+    
+}
+
+
+#main-content {
+    min-height: calc (100vh - 80px);
+}
+
+
+footer {
+    bottom: 1px;
+    position: fixed;
+    width: 100%;
+    left: 45%;   
+}
+
+.large-centered{
+    margin-top: 15px;
+    text-align: center;
+    font-size: medium;
+    color: deepskyblue;
+}
+
+.error{
+    color: #D8000C;
+    background-color: #FFD2D2;
+    margin: 10px 0px;
+    padding:12px;
+    border: dashed;
+}
+
+#copyright-paragraph {
+    font-size: 1.0em;
+    bottom: 10px;
+}
+p.capitalize {
+    text-transform: capitalize;
+  }
+
+#welcome{
+    font-size: 2em;
+}
+
+#background-image {
+    width: 100%;
+    padding: 10px;
+
+}

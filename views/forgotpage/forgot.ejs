@@ -1,0 +1,37 @@
+<%- include ('../navbarpage/navbar') %>
+<div class="container row">
+    <div class="jumbotron col-sm-4 pull-center">
+
+        <form action="/forgot" method="post">
+            <div>
+                <br>
+                <label>Enter your email:</label>
+                <input id="email" type="text" name="email" placeholder="email"/>
+                <br>
+            </div>
+            <br>
+            <div>
+                <label>New password:</label>
+                <input id="newPassword" type="password" name="newPassword" placeholder="new password"/>
+            </div> 
+            <br>
+            <div>
+               
+                <label>Confirm New Password:</label>
+                <input id="newPasswordRepeat" type="password" name="newPasswordRepeat" placeholder="confirm new password"/>
+
+            </div>
+            <br>
+            <div>
+                <input class="btn btn-primary" type="submit" value="reset password"/>
+                
+            </div>
+            <br>
+            <%if(typeof message == "undefined"){%>
+                <div></div>
+            <% } else { %>
+                <div class="error"> <%= message%> </div> 
+            <%}%>
+        </form> 
+
+        <%- include ('../footerpage/footer') %>
