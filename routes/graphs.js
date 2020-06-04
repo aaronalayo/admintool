@@ -15,24 +15,20 @@ route.get('/admin/graphs', async (req, res) => {
             
             const startTime = '2020-05-28T07:40:27.665Z';
             const endTime = '2020-05-28T13:40:27.665Z';
-            const measurement = await Measurement.query().select('time', 'value').whereBetween('time',[startTime , endTime]).where({'sensor_id':58});
-
-           
-                
-
+            const measurement = await Measurement.query().select('time', 'value').whereBetween('time',[startTime , endTime]).where({'sensor_id':64}).orderBy('time').limit('50') ;
+          
             const labels = [];
-            const dataset= [];
-            for (var i in [measurement]) {
-              labels.push(measurement[i].time),
-              dataset.push(measurement[i].value)
+            const dataset = [];
+            for (var i = 0; i < measurement.length; i++) {
+              var obj = measurement[i];
+              for (var key in obj) {
+                labels.push(obj['time']);
+                dataset.push(obj['value']);
+              }
             }
-          
-            console.log(labels);   
-   
-            res.render("graphs/graphs", { labels:labels, dataset: dataset, username: req.session.user[0].username });
-        
-          
-                                                                                                         
+         
+            console.log(labels)
+            res.render("graphs/graphs", {labels:labels,dataset: dataset, username: req.session.user[0].username });
 
       } catch (e) {
         res.render("graphs/graphs", { message: "Error in Fetching devices" });
