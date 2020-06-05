@@ -2,7 +2,10 @@ const express = require("express"); //instantiate;
 const app = express();
 const server = require('http').createServer(app);
 
-
+const io = require('socket.io')(server);
+module.exports.getIO = function(){
+  return io;
+}
 
 
 // parse application/json

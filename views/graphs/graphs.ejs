@@ -5,7 +5,9 @@
 
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js" integrity="sha256-Dul4c09cdrWKXVtallPxF558lwxMwCC8dXJdZ0PVW54=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.min.js"></script>
 <div class="chart-container" style="position: relative; height:40vh; width:50vw">
@@ -21,23 +23,23 @@ var ctx = document.getElementById('chart');
     data: {
         labels:<%-JSON.stringify(labels)%>,
         datasets: [{
-            label: 'Measurements',
+            label: 'Measurements for Sensor',
             data: <%-JSON.stringify(dataset)%>,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
+                // 'rgba(255, 99, 132, 0.2)',
                 // 'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                // 'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                // 'rgba(255, 159, 64, 0.2)'
+                // 'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                // 'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
-                // 'rgba(54, 162, 235, 1)',
-                // 'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                // // 'rgba(54, 162, 235, 1)',
+                // // 'rgba(255, 206, 86, 1)',
+                // 'rgba(75, 192, 192, 1)',
+                // 'rgba(153, 102, 255, 1)',
+                // 'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -54,7 +56,7 @@ var ctx = document.getElementById('chart');
         },
         title: {
             display: true,
-            text: 'Graph to display measuremts from sensor 64'
+            text: 'Measurements from sensor '
     },
         scales: {
             xAxes: [{
@@ -83,5 +85,47 @@ var ctx = document.getElementById('chart');
 });
 
 </script>
+<div>
+<p class="text-info large-centered">Sensor number : <%-JSON.stringify(sensor)%></p>
+</div>
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Sensor</label>
+            <input type="number" class="form-control" id="sensor-id" placeholder="Sensor" >
+        </div>
+        <div class="form-group col-md-6">
+            <label>Limit</label>
+            <input type="number" class="form-control" id="new-limit" placeholder="Limit" >
+        </div>
+        <div class="form-group col-md-6">
+            <label>Start Date</label>
+            <input type="datetime-local" class="form-control" id="start-date" placeholder="Start Date" >
+        </div>
+        <div class="form-group col-md-6">
+            <label>End Date</label>
+            <input type="datetime-local" class="form-control" id="end-date" placeholder="End Date" >
+        </div>
+       
+    </div>
 
+
+    <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDatesSubmitted()">Send</button>
+</form>
+<script>
+    const socket = io.connect("localhost:2000");
+
+    function onDatesSubmitted() {
+        //$('#btn-send').bind('click', function() {
+        const startDate = $('#start-date').val()
+        const endDate = $('#end-date').val()
+        const sensor = $('#sensor-id').val();
+        const newLimit = $('#new-limit').val();
+        socket.emit( 'graphs', {startDate: startDate, endDate:endDate, sensor:sensor, newLimit: newLimit});
+        console.log(sensor,startDate, endDate, newLimit);
+    }
+    
+        
+    
+</script>
 <%- include ('../footerpage/footer') %>
