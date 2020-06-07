@@ -66,7 +66,7 @@ var ctx = document.getElementById('chart');
                 },
                 ticks: {
                 callback: function(value) { 
-                return new Date(value).toLocaleDateString('de-DE', {hour:'numeric', minute:'numeric'}); 
+                return new Date(value).toLocaleDateString('dk-DK', {hour:'numeric', minute:'numeric'}); 
     },
 },
         
@@ -89,7 +89,7 @@ var ctx = document.getElementById('chart');
 <p class="text-info large-centered">Sensor number : <%-JSON.stringify(sensor)%></p>
 </div>
 <form>
-    <div class="form-row">
+    <div class="form-row" id="my-form-id">
         <div class="form-group col-md-6">
             <label>Sensor</label>
             <input type="number" class="form-control" id="sensor-id" placeholder="Sensor" >
@@ -110,22 +110,46 @@ var ctx = document.getElementById('chart');
     </div>
 
 
-    <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDatesSubmitted()">Send</button>
+    <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDatesSubmitted()" value="Submit form">Send</button>
 </form>
+
 <script>
+    
+
     const socket = io.connect("localhost:2000");
 
     function onDatesSubmitted() {
-        //$('#btn-send').bind('click', function() {
-        const startDate = $('#start-date').val()
-        const endDate = $('#end-date').val()
-        const sensor = $('#sensor-id').val();
-        const newLimit = $('#new-limit').val();
-        socket.emit( 'graphs', {startDate: startDate, endDate:endDate, sensor:sensor, newLimit: newLimit});
-        console.log(sensor,startDate, endDate, newLimit);
+   
+        // $('form-row').submit(function () {
+
+            if ($("#start-date").val() === "") {
+                alert('Please fill start date.');
+            
+            } else if ($("#end-date").val() === "") {
+
+                alert('Please fill end date.');
+            } else if ($("#sensor-id").val() === "") {
+                alert('Please fill sensor.');
+
+            } else if ($("#new-limit").val() === "") {
+                alert('Please fill limit.');
+
+            }else {
+         //$('#btn-send').bind('click', function() {
+            const startDate = $('#start-date').val()
+            const endDate = $('#end-date').val()
+            const newSensor = $('#sensor-id').val();
+            const newLimit = $('#new-limit').val();
+            socket.emit( 'graphs', {startDate: startDate, endDate:endDate, newSensor:newSensor, newLimit: newLimit});
+            console.log(sensor,startDate, endDate, newLimit);
     }
+
+}
+
     
-        
-    
+
+
 </script>
+
+
 <%- include ('../footerpage/footer') %>

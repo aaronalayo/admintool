@@ -10,28 +10,28 @@ const escape = require('escape-html');
 
 var sensorId = 64;
 var start = "2020-05-28T07:40:27.665Z";
+             
 var end = "2020-05-28T13:40:27.665Z"; 
 var limit = 50;
 
 io.on('connection', socket => { 
   console.log("Socket joined", socket.id);
 
-  socket.on("graphs", ({ startDate, endDate, sensor, newLimit}) => {
+  socket.on("graphs", ({ startDate, endDate, newSensor, newLimit}) => {
      
-  
-     start = startDate;
-     end = endDate;
-     end = new Date().getTime();
-     sensorId = sensor;
-     limit = newLimit;
-    
+      start = new Date(startDate).toISOString();
+      start = moment(start).add(2,'hours');
+      console.log(start);
+      end = new Date(endDate).toISOString(); 
+      end = moment(end).add(2,'hours');
+      sensorId = newSensor;
+      limit = newLimit;  
+
       // sends back to the very same client
       // socket.emit("graphs", { sensor: escape(sensor) });
 
       // sends to all clients but the client itself
       // socket.broadcast.emit("Color", { color });
-
-  
   });
   
 

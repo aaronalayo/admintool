@@ -14,12 +14,16 @@
 
           table.integer('role_id').unsigned().notNullable();
           table.foreign('role_id').references('roles.id');
+          table.uuid('organization_uuid').unsigned().notNullable();
+          table.foreign('organization_uuid').references('organizations.organization_uuid');
+
 
 
     
         table.timestamp('updated_at').defaultTo(knex.fn.now())
 
-    table.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
+        table.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
+       
 })
 .raw(`
     CREATE OR REPLACE FUNCTION update_updated_at_column()

@@ -1,7 +1,7 @@
 const {Model} = require('objection');
 
 const Role = require('./Role.js');
-
+const Organization = require('./Organization.js')
 
 class User extends Model {
     static tableName = 'users';
@@ -14,6 +14,15 @@ class User extends Model {
               from: 'users.roleId',
               to: 'roles.id'
             }
+        },
+        organization: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: Organization,
+            join: {
+                from: 'users.organizationUuid',
+                to: 'organizations.organization_uuid'
+            }
+
         }
     }
 }
