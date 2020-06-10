@@ -1,5 +1,9 @@
 
   <%- include ('../navbarpage/navbar') %>
+  <a href="/adduser"><type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"></type>
+    Add User
+   </a>
+  
   <style>
     table,
     td,
@@ -24,7 +28,7 @@
       padding: 1px;
     }
   </style>
-  <table class="table table-bordered">
+  <table class="table table-hover table-responsive table-bordered">
     <thead>
       <tr>
         <th scope="col">Username</th>
@@ -32,8 +36,8 @@
         <th scope="col">Role</th>
         <th scope="col">Organization</th>
 
-        <!-- <th scope="col">Edit</th>
-        <th scope="col">Delete</th> -->
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     
@@ -48,8 +52,8 @@
       <td><%=users.email %></td>
       <td><%=users.role.role %></td>
       <td><%=users.organization.name %></td>
-      <!-- <td><a href="/user/edit/<%=users.id%>">Edit</a></td>
-      <td><a href="/user/delete/<%=users.id%>">Delete</a></td> -->
+      <td><a href="/user/edit/<%=users.id%>">Edit</a></td>
+      <td><a href="/user/delete/<%=users.id%>">Delete</a></td>
     </tr>
     <%  i++; }) %>
     <% } else{ %>

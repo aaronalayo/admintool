@@ -19,7 +19,7 @@ class User extends Model {
             relation: Model.BelongsToOneRelation,
             modelClass: Organization,
             join: {
-                from: 'users.organizationUuid',
+                from: 'users.organization_uuid',
                 to: 'organizations.organization_uuid'
             }
 

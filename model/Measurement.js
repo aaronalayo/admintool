@@ -6,7 +6,7 @@ class Measurement extends Model {
   static tableName = 'measurements';
     
     static relationMappings = {
-      Sensor: {
+      sensors: {
           relation: Model.HasOneRelation,
           modelClass:Sensor,
           join: {

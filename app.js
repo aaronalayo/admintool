@@ -93,9 +93,9 @@ app.get('/', (req, res) => {
 }        
 });
 
-app.get("/dashboard", check,(req, res) => {
+app.get("/adduser", checkAdmin,(req, res) => {
   if(req.session.user) {
-  res.render("dashboardpage/dashboard", {  username: req.session.user[0].username});
+  res.render("adduserpage/adduser", {  username: req.session.user[0].username});
 } else{
   return res.redirect("/login");
 }
@@ -125,14 +125,6 @@ app.get("/forgot", (req, res) => {
   res.render("forgotpage/forgot");
 });
 
-app.get("/readme", (req, res) => {
-  if(req.session.user) {
-    res.render('readmepage/readme', {username: req.session.user[0].username});   
-}else {
-  return res.render('readmepage/readme', {username: null});
-}          
-});
-
 app.get("/graphs", (req, res) => {
   if(req.session.user) {
     res.render('graphs/graphs', {username: req.session.user[0].username});   
@@ -145,7 +137,9 @@ app.get("/graphs", (req, res) => {
 //Rest api for models
 const authRoute = require("./routes/auth.js");
 const usersRoute = require("./routes/users.js");
-const graphsRoute = require("./routes/graphs.js")
+const graphsRoute = require("./routes/graphs.js");
+
+
 
 //auth routes
 app.use(authRoute);

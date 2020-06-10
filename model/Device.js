@@ -1,20 +1,20 @@
 const { Model } = require('objection');
 
 const Organization = require('./Organization.js');
+const Sensor = require(('./Sensor.js'))
 
 class Device extends Model {
   static tableName = 'devices';
     
     static relationMappings = {
-      Organization: {
+      organizations: {
           relation: Model.HasManyRelation,
           modelClass: Organization,
           join: {
-            from: 'devices_organization_uuid',
-            to: 'organization.organization_uuid'
+            from: 'devices.organization_uuid',
+            to: 'organizations.organization_uuid'
           }
       }
-  
   }
 };
 

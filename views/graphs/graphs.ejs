@@ -14,16 +14,17 @@
   <canvas id="chart"></canvas>
 </div>
 
-<script>                
+<script>   
+         
 
-var ctx = document.getElementById('chart');
+var ctx = document.getElementById('chart').getContext('2d');
 
     var chart = new Chart(ctx, {
     type: 'line',
     data: {
         labels:<%-JSON.stringify(labels)%>,
         datasets: [{
-            label: 'Measurements for Sensor',
+            label:<%-JSON.stringify(sensor)%>,
             data: <%-JSON.stringify(dataset)%>,
             backgroundColor: [
                 // 'rgba(255, 99, 132, 0.2)',
@@ -54,6 +55,11 @@ var ctx = document.getElementById('chart');
             mode: 'dataset',
             mode: 'point',
         },
+        legend: {
+            labels: {
+            fontSize: 18
+            }
+        },
         title: {
             display: true,
             text: 'Measurements from sensor '
@@ -78,7 +84,8 @@ var ctx = document.getElementById('chart');
                     beginAtZero: true
            
                 }
-            }]
+            }],
+            
         }
     }
     
@@ -86,7 +93,7 @@ var ctx = document.getElementById('chart');
 
 </script>
 <div>
-<p class="text-info large-centered">Sensor number : <%-JSON.stringify(sensor)%></p>
+
 </div>
 <form>
     <div class="form-row" id="my-form-id">
@@ -122,29 +129,32 @@ var ctx = document.getElementById('chart');
    
         // $('form-row').submit(function () {
 
-            if ($("#start-date").val() === "") {
-                alert('Please fill start date.');
+            // if ($("#start-date").val() === "") {
+            //     alert('Please fill start date.');
             
-            } else if ($("#end-date").val() === "") {
+            // } else if ($("#end-date").val() === "") {
 
-                alert('Please fill end date.');
-            } else if ($("#sensor-id").val() === "") {
-                alert('Please fill sensor.');
+            //     alert('Please fill end date.');
+            // } else if ($("#sensor-id").val() === "") {
+            //     alert('Please fill sensor.');
 
-            } else if ($("#new-limit").val() === "") {
-                alert('Please fill limit.');
+            // } else if ($("#new-limit").val() === "") {
+            //     alert('Please fill limit.');
 
-            }else {
+            // }else {
          //$('#btn-send').bind('click', function() {
-            const startDate = $('#start-date').val()
-            const endDate = $('#end-date').val()
+            
+            
             const newSensor = $('#sensor-id').val();
             const newLimit = $('#new-limit').val();
+            const startDate = $('#start-date').val();
+            const endDate = $('#end-date').val()
+            
             socket.emit( 'graphs', {startDate: startDate, endDate:endDate, newSensor:newSensor, newLimit: newLimit});
-            console.log(sensor,startDate, endDate, newLimit);
+          
     }
 
-}
+// }
 
     
 

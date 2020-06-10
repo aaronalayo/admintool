@@ -1,7 +1,104 @@
+
 <%- include ('../navbarpage/navbar') %>
+<style>
+  table,
+  td,
+  th {
+    border: 3px solid #ddd;
+    text-align: center;
+  }
 
+  table {
+    border-collapse: collapse;
+    width: 20%;
+  }
 
+  .table-data {
+    position: relative;
+    left: 120px;
+    top: 100px;
+  }
 
+  th,
+  td {
+    padding: 1px;
+  }
+</style>
+<table class="table table-hover table-responsive table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Email Address</th>
+      <th scope="col">Organization</th>
+      
+      <!-- <th scope="col">Edit</th>
+      <th scope="col">Delete</th> -->
+    </tr>
+  </thead>
+  
+  <% 
+  if(userData.length!=0){
+    var i=1;
+    userData.forEach(function(users){
+    %>
+  <tr>
+
+    <td><%=users.username %></td>
+    <td><%=users.email %></td>
+    <td><%=users.organization.name %></td>
+    <!-- <td><a href="/user/edit/<%=users.id%>">Edit</a></td>
+    <td><a href="/user/delete/<%=users.id%>">Delete</a></td> -->
+  </tr>
+  <%  i++; }) %>
+  <% } else{ %>
+  <tr>
+    <td colspan="7">No Data Found</td>
+  </tr>
+  <% } %>
+</table>
+<table class="table table-hover table-responsive table-bordered">
+    <thead>
+        <tr>
+         <h3>Devices</h3>
+        </tr>
+      <tr>
+        <th scope="col">Device Name</th>
+        <th scope="col">Device uuid</th>
+        <th scope="col">Device Details</th>
+      </tr>
+    </thead>
+    
+    <% 
+    if(devices.length!=0){
+      var i=1;
+      devices.forEach(function(devices){
+      %>
+    <tr>
+  
+      <td><%=devices.name %></td>
+      <td><%=devices.deviceUuid %></td>
+      <td><a href="<%= link %>" class="btn btn-primary" role="button">Details</a></td>
+     
+    </tr>
+    <%  i++; }) %>
+    <% } else{ %>
+    <tr>
+      <td colspan="7">No Data Found</td>
+    </tr>
+    <% } %>
+  </table>
+  
+
+<tbody class="tbody">
+    <%if(typeof message == "undefined"){%>
+        <div></div>
+    <% } else { %>
+        <div class="error"> <%= message%> </div> 
+    <%}%>
+</tbody>
+</div>
+</div>
 
 
 <%- include ('../footerpage/footer') %>
+
