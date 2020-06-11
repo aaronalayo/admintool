@@ -10,7 +10,7 @@
     "seed:make": "knex seed:make",
     "seed:run": "knex seed:run",
     "cleandb": "knex migrate:rollback && knex migrate:latest && knex seed:run",
-    "start": "cross-env PORT=80 nodemon app.js",
+    "start": "cross-env PORT=80 node app.js",
     "start-dev": "cross-env PORT=2000 nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
