@@ -70,6 +70,7 @@ const checkAdmin = require("./middleware/checkAdmin.js");
 const checkSession = require("./middleware/checkSession.js");
 const isAdmin = require("./middleware/loggedIn.js");
 const loggeIn = require("./middleware/isAdmin.js")
+
 app.use(checkSession);
 app.use(isAdmin);
 app.use(loggeIn);
@@ -147,6 +148,7 @@ const authRoute = require("./routes/auth.js");
 const usersRoute = require("./routes/users.js");
 const graphsRoute = require("./routes/graphs.js");
 const deviceRoute = require("./routes/device.js");
+const sensorRoute = require("./routes/sensor.js");
 
 
 
@@ -156,6 +158,7 @@ app.use(authRoute);
 app.use(usersRoute);
 app.use(graphsRoute);
 app.use(deviceRoute);
+app.use(sensorRoute);
 
 
 //endpoint

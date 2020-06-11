@@ -1,0 +1,67 @@
+<%- include ('../navbarpage/navbar') %>
+
+
+
+<table class="table table-hover table-responsive table-bordered">
+    <thead>
+        <tr>
+         <h3></p>Sensor <%=sensor %></h3>
+        </tr>
+      <tr>
+        <th scope="col">Sensor Uuid</th>
+        <th scope="col">Sensor Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Sensor Type</th>
+        <th scope="col">Description</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Calibration Uuid</th>
+
+
+      </tr>
+    </thead>
+    
+    <% 
+    if(sensorDetail.length!=0){
+      var i=1;
+      sensorDetail.forEach(function(sensor){
+      %>
+    <tr>
+      <td><%=sensor.sensorUuid %></td>
+      <td><%=sensor.sensorId %></td>
+      <td><%=sensor.name %></td>
+      <td><%=sensor.sensorType %></td>
+      <td><%=sensor.description %></td>
+      <td><%=sensor.unit %></td>
+      <td><%=sensor.calibrationUuid %></td>
+     
+      
+     
+    </tr>
+    <%  i++; }) %>
+    <% } else{ %>
+    <tr>
+      <td colspan="7">No Data Found</td>
+    </tr>
+    <% } %>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include ('../footerpage/footer') %>

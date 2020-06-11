@@ -120,31 +120,5 @@ route.post('/adduser',checkAdmin, async (req, res) => {
   }
 });
 
-// route.get('/device', async (req, res) => {
-//   if(req.session.user) {
-      
-//       console.log(req.body)
-//       const username = req.session.user[0].username;
-     
-//       try {
 
-//           const user = await User.query().select().where({username: username}).withGraphJoined('organization');
-          
-
-//          console.log(user)
-
-//           // const devices = await Sensor.query().select().where({device: device})
-
-//       } catch (error) {
-//           res.render("devicepage/device", { message: "Error in Fetching data" , username: req.session.user[0].username});
-//       }
-      
-      
-
-
-//   }else {
-//       return res.redirect("/login");
-//   }
-
-// });
 module.exports = route;
