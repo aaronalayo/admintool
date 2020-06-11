@@ -52,3 +52,10 @@ p.capitalize {
 #btn-send {
     align-items: center;
 }
+
+.message {
+    position: absolute;
+    padding-top: 20em;
+    padding-left: 2em;
+    position: absolute;
+}

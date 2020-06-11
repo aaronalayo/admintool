@@ -1,0 +1,82 @@
+<%- include ('../navbarpage/navbar') %>
+
+<a href="/dashboard"><type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false"></type>
+    back
+   </a>
+
+
+</table>
+<table class="table table-hover table-responsive table-bordered">
+    <thead>
+        <tr>
+         <h3>Device</h3>
+        </tr>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Location</th>
+        <th scope="col">Secret</th>
+      </tr>
+    </thead>
+    
+    <% 
+    if(deviceData.length!=0){
+      var i=1;
+      deviceData.forEach(function(device){
+      %>
+    <tr>
+  
+      <td><%=device.name %></td>
+      <td><%=device.description %></td>
+      <td><a href="<%= link %>" role="button">See Location</a></td>
+      <td><%=device.secret %></td>
+     
+    </tr>
+    <%  i++; }) %>
+    <% } else{ %>
+    <tr>
+      <td colspan="7">No Data Found</td>
+    </tr>
+    <% } %>
+  </table>
+
+
+  <table class="table table-hover table-responsive table-bordered">
+    <thead>
+        <tr>
+         <h3>Sensors</h3>
+        </tr>
+      <tr>
+        <th scope="col">Sensor Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Sensor Uuid</th>
+        <th scope="col">Sensor Details</th>
+
+      </tr>
+    </thead>
+    
+    <% 
+    if(sensorsData.length!=0){
+      var i=1;
+      sensorsData.forEach(function(sensors){
+      %>
+    <tr>
+  
+      <td><%=sensors.sensorId %></td>
+      <td><%=sensors.name %></td>
+      <td><%=sensors.description %></td>
+      <td><%=sensors.sensorUuid %></td>
+      <td><a href="<%= link %><%=sensors.sensorId %>"  class="btn btn-primary"  role="button">Details</a></td>
+      
+     
+    </tr>
+    <%  i++; }) %>
+    <% } else{ %>
+    <tr>
+      <td colspan="7">No Data Found</td>
+    </tr>
+    <% } %>
+  </table>
+
+<%- include ('../footerpage/footer') %>

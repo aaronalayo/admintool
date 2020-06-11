@@ -15,7 +15,7 @@
 <body class="container">
     <style>
         body {
-            background-color: rgb(255, 255, 255);
+            background-color: rgb(248, 247, 209);
         }
     </style>
     <div class="page-header">
@@ -31,13 +31,13 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
                     <% if (loggedIn == null) { %>
-                       
-                    <li><a href="/dashboard">Dashboard</a></li>
-                    <% }else if (isAdmin !== null) { %> 
-                        <li><a href="/admin">Admin</a></li>
-                        
+                   
+                    <% }else if (isAdmin == null) { %> 
+                   
+                        <li><a href="/dashboard">Dashboard</a></li>
                     <% } else { %>
-                    
+                        <li><a href="/admin">Admin</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
                     <% } %>
                     
                 </ul>

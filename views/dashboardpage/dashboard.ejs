@@ -1,29 +1,6 @@
 
 <%- include ('../navbarpage/navbar') %>
-<style>
-  table,
-  td,
-  th {
-    border: 3px solid #ddd;
-    text-align: center;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 20%;
-  }
-
-  .table-data {
-    position: relative;
-    left: 120px;
-    top: 100px;
-  }
-
-  th,
-  td {
-    padding: 1px;
-  }
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <table class="table table-hover table-responsive table-bordered">
   <thead>
     <tr>
@@ -76,8 +53,10 @@
     <tr>
   
       <td><%=devices.name %></td>
-      <td><%=devices.deviceUuid %></td>
-      <td><a href="<%= link %>" class="btn btn-primary" role="button">Details</a></td>
+      <td><%=devices.deviceUuid %>
+ 
+   
+      <td><a href="<%= link %><%=devices.deviceUuid %>"  class="btn btn-primary"  role="button">Details</a></td>
      
     </tr>
     <%  i++; }) %>
@@ -101,4 +80,6 @@
 
 
 <%- include ('../footerpage/footer') %>
+
+
 

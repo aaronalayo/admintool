@@ -32,23 +32,22 @@ route.get('/dashboard', check, async (req, res) => {
     try {
       const users = await User.query().select().where({'username':username}).withGraphJoined('role').withGraphJoined('organization');
       const devices = await Device.query().select().where({'organizationUuid': users[0].organizationUuid});
-      console.log(users);
-      console.log(devices);
-      res.render("dashboardpage/dashboard", {userData: users, devices: devices, username: req.session.user[0].username,  link: "admin/graphs"});
+
+      res.render("dashboardpage/dashboard",{userData: users, devices: devices, username: req.session.user[0].username,  link: "/dashboard/device/"});
     } catch (e) {
-      res.render("dashboardpage/dashboard", { message: "Error in Fetching users" });
+      res.render("dashboardpage/dashboard", { message: "Error in Fetching data" , username: req.session.user[0].username});
     }
   } else{
     return res.redirect("/login");
   }
 } );
 
-route.post('/adduser', async (req, res) => {
+route.post('/adduser',checkAdmin, async (req, res) => {
   if(req.session.user) {
    //username, password, repeat password, email
   const { username, password, passwordRepeat, email, organization } = req.body;
   
-    console.log(username, password, passwordRepeat, email, organization);
+   
   const isPasswordTheSame = password === passwordRepeat;
 
   if (username && password && isPasswordTheSame) {
@@ -63,7 +62,7 @@ route.post('/adduser', async (req, res) => {
       }else {
 
       try {
-        const org = await Organization.query().select('organization_uuid').where({name: organization});
+        const org = await Organization.query().select('organization_uuid').where({name: organization}).limit(1);
         const organization_uuid = [];
             for (var i = 0; i <org.length; i++) {
               var obj = org[i];
@@ -72,9 +71,10 @@ route.post('/adduser', async (req, res) => {
                 
               }
             }
-        console.log(organization_uuid[0]);
+        
+ 
         // 1.check if username exist
-        const userFound = await User.query().select().where({username: username, organization_uuid: organization_uuid}).limit(1);
+        const userFound = await User.query().select().where({'username': username, 'organization_uuid': organization_uuid[0]}).limit(1);
         // const organization = await Organization
         if (userFound.length > 0) {
           // 2.do if else check if it exist and give response
@@ -84,7 +84,7 @@ route.post('/adduser', async (req, res) => {
           }else {
           const defaultUserRole = await Role.query().select().where({ role: "USER" });
          
-
+          
           const hashedPassword = await bcrypt.hash(password, saltRounds);
           // 3.insert in db
           const createdUser = await User.query().insert({
@@ -92,7 +92,7 @@ route.post('/adduser', async (req, res) => {
             password: hashedPassword,
             email: email,
             roleId: defaultUserRole[0].id,
-            organization_uuid: ''+organization_uuid[0],
+            organization_uuid: organization_uuid[0],
           });
 
           const mailTo = createdUser.email;
@@ -103,7 +103,8 @@ route.post('/adduser', async (req, res) => {
             "User account created",
             "Hello " + newUser + " your account has been created."
           );
-          return res.render('adduserpage/adduser',{ message:  `${createdUser.username} has been created`});
+          res.redirect("/admin/users");
+          
         }
       
       
@@ -118,4 +119,32 @@ route.post('/adduser', async (req, res) => {
   } 
   }
 });
+
+// route.get('/device', async (req, res) => {
+//   if(req.session.user) {
+      
+//       console.log(req.body)
+//       const username = req.session.user[0].username;
+     
+//       try {
+
+//           const user = await User.query().select().where({username: username}).withGraphJoined('organization');
+          
+
+//          console.log(user)
+
+//           // const devices = await Sensor.query().select().where({device: device})
+
+//       } catch (error) {
+//           res.render("devicepage/device", { message: "Error in Fetching data" , username: req.session.user[0].username});
+//       }
+      
+      
+
+
+//   }else {
+//       return res.redirect("/login");
+//   }
+
+// });
 module.exports = route;

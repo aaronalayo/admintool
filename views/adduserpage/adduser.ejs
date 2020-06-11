@@ -8,21 +8,26 @@
  <div class="form-row">
         <div class="form-group col-md-6" >
             <form action="/adduser" method="post">
-                
-                <div class="form-group col-md-6">
+              
+                <div class="form-group col-md-12">
+                  <div class="form-row">
                     <label for="username" >Username:</label>
                     <input id="username" type="text" class="form-control" name="username" placeholder="username"/>
                 </div>
+              </div> 
+                <div class="form-row"></div>
                 <div class="form-group col-md-6">
                     
                     <label>Password:</label>
                     <input id="password" type="password" class="form-control" name="password" placeholder="password"/>
-                </div>    
+                </div> 
+                <div class="form-row">  
                 <div class="form-group col-md-6">
                       
                     <label>Confirm password:</label>
                     <input id="passwordRepeat" type="password" class="form-control" name="passwordRepeat" placeholder="confirm password"/>
                 </div>
+              </div> 
                 <div class="form-group col-md-6">
               
                     <label>Email:</label>
@@ -42,20 +47,25 @@
                 </div>
                 <div class="form-group col-md-6" >
                 
-                      <input class="btn btn-primary" type="submit" onclick="getOption()" value="Create User"/>
-                    </div>
-                    
+                      <input class="btn btn-outline-primary" type="submit" onclick="getOption()" value="Create User"/>
                 </div>
-                <br>
-                <div>
+
+
+                </div>
+              </div>
+              <div class="message">
+
+             
                 <%if(typeof message == "undefined"){%>
                   <div></div>
-              <% } else { %>
+                <% } else { %>
                   <div class="error"> <%= message%> </div> 
-              <%}%>
-            </div>
-              
-            </form>     
+                <%}%>
+              </div>
+            </form> 
+    
+            
+    
 
 <script type="text/javascript">
   function getOption() {

@@ -133,11 +133,21 @@ app.get("/graphs", (req, res) => {
 }          
 });
 
+// app.get("/device", check,(req, res) => {
+//   if(req.session.user) {
+//   res.render("devicepage/device", {  username: req.session.user[0].username});
+// } else{
+//   return res.redirect("/login");
+// }
+// });
+
 /** Add routes */
 //Rest api for models
 const authRoute = require("./routes/auth.js");
 const usersRoute = require("./routes/users.js");
 const graphsRoute = require("./routes/graphs.js");
+const deviceRoute = require("./routes/device.js");
+
 
 
 
@@ -145,6 +155,8 @@ const graphsRoute = require("./routes/graphs.js");
 app.use(authRoute);
 app.use(usersRoute);
 app.use(graphsRoute);
+app.use(deviceRoute);
+
 
 //endpoint
 
