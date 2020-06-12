@@ -130,9 +130,9 @@ var ctx = document.getElementById('chart').getContext('2d');
 <script>
     
     //connect to localhost
-    const socket = io.connect("localhost:2000");
+    // const socket = io.connect("localhost:2000");
     //Connec to public ip
-    // const socket = io.connect("http://35.228.37.83:80");
+    const socket = io.connect("http://35.228.37.83:80");
     function onDataSubmitted() {
               
             const newSensor = $('#sensor-id').val();
