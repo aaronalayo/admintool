@@ -4,6 +4,14 @@
     
 }
 
+.container-fluid {
+  height: 20px;
+}
+.nav {
+   
+    font-size:1em;
+    text-align: justify;
+}
 
 #main-content {
     min-height: calc (100vh - 80px);
@@ -45,17 +53,59 @@ p.capitalize {
 }
 
 #background-image {
-    width: 100%;
-    padding: 10px;
+    width: 50%;
+    margin-left: 25%;
+    image-rendering: optimizeQuality;
+    
 
 }
 #btn-send {
     align-items: center;
 }
 
-.message {
-    position: absolute;
-    padding-top: 20em;
-    padding-left: 2em;
-    position: absolute;
+#btn-details {
+    justify-content: center;
 }
+.message {
+   
+    padding-bottom: 20%;
+    padding-left: 1em;
+  
+}
+/* 
+:root {
+    --input-padding-x: 1.5rem;
+    --input-padding-y: 0.75rem;
+  } */
+  
+  .login, 
+  .image {
+    size:60 px;
+
+  }
+  
+  .bg-image {
+    background-image: url('/images/UpSmarting_Logo_text_HR_coolvetica_large.png');
+    
+    background-size: cover;
+    background-size: 190%;
+ 
+
+   
+  }
+  
+  .login-heading {
+    font-weight: 300;
+  }
+  
+  
+  .form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+
+  
+
+  

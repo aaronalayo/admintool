@@ -3,4 +3,5 @@ module.exports = {
     user: 'username',
     password: 'password',
     sessionSecret: 'express session secret'
+
 };

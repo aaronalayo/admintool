@@ -5,5 +5,6 @@ module.exports = {
     database: 'upsm_db', 
     password: 'upsmarting',
     user: 'aaron',
+    sessionSecret: 'smarting'
 
 };

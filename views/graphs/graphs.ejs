@@ -1,10 +1,6 @@
 <%- include ('../navbarpage/navbar') %>
 
 
-
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js" integrity="sha256-Dul4c09cdrWKXVtallPxF558lwxMwCC8dXJdZ0PVW54=" crossorigin="anonymous"></script>
@@ -98,6 +94,7 @@ var ctx = document.getElementById('chart').getContext('2d');
 
 </div>
 <form>
+   
     <div class="form-row" id="my-form-id">
         <div class="form-group col-md-6">
             <label>Sensor</label>
@@ -119,18 +116,24 @@ var ctx = document.getElementById('chart').getContext('2d');
     </div>
 
     <div class="form-group col-md-6" >
-    <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDatesSubmitted()" value="Submit form">Send</button>
+    <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDataSubmitted()" value="Submit form">Send</button>
     </div>
-
+       <div class="form-group col-md-2">
+    <%if(typeof message == "undefined"){%>
+        <div></div>
+      <% } else { %>
+        <div class="error" role="alert"> <%= message%> </div> 
+      <%}%>
+    </div>
 </form>
-
+ 
 <script>
     
     //connect to localhost
-    // const socket = io.connect("localhost:2000");
+    const socket = io.connect("localhost:2000");
     //Connec to public ip
-    const socket = io.connect("http://35.228.37.83:80");
-    function onDatesSubmitted() {
+    // const socket = io.connect("http://35.228.37.83:80");
+    function onDataSubmitted() {
               
             const newSensor = $('#sensor-id').val();
             const newLimit = $('#new-limit').val();
@@ -141,6 +144,10 @@ var ctx = document.getElementById('chart').getContext('2d');
           
     }
 
+    // socket.on("graphs", (sensor) => {
+            
+    //         $('#messages').append(`<div>${sensor.sensorId}</div>`);
+    //     });
 
 
     

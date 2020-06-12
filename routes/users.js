@@ -11,7 +11,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
 const sendEmail = require("../mailer");
-const toUUID = require('to-uuid').toUUID;
+
 
 route.get('/admin/users', checkAdmin, async (req, res) => {
   if(req.session.user) {

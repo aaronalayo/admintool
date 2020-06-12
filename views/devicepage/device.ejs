@@ -1,8 +1,5 @@
 <%- include ('../navbarpage/navbar') %>
 
-<a href="/dashboard"><type="button" class="btn btn-outline-primary" data-toggle="button" aria-pressed="false"></type>
-    back
-   </a>
 
 
 </table>
@@ -67,7 +64,7 @@
       <td><%=sensors.name %></td>
       <td><%=sensors.description %></td>
       <td><%=sensors.sensorUuid %></td>
-      <td><a href="<%= linkSensor %><%=sensors.sensorId %>"  class="btn btn-primary"  role="button">Details</a></td>
+      <td><a href="<%= linkSensor %><%=sensors.sensorId %>" id="btn-details" class="btn btn-primary"  role="button">Details</a></td>
       
      
     </tr>
@@ -78,5 +75,13 @@
     </tr>
     <% } %>
   </table>
+  <button class="btn btn-outline-primary" data-toggle="button" onclick="goBack()">Go Back</button>
+
 
 <%- include ('../footerpage/footer') %>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+  </script>

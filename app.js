@@ -19,7 +19,7 @@ const session = require("express-session");
 app.use(
   session({
     cookieName: "session",
-    secret: require("./config/mysqlCredentials.js").sessionSecret,
+    secret: require("./config/psqlCredentials.js").sessionSecret,
     duration: 30 * 60 * 1000,
     activeDuration: 5 * 60 * 1000,
     httpOnly: true,
@@ -37,7 +37,7 @@ const rateLimit = require("express-rate-limit");
 
 // Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
 // see https://expressjs.com/en/guide/behind-proxies.html
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -74,14 +74,6 @@ const loggeIn = require("./middleware/isAdmin.js")
 app.use(checkSession);
 app.use(isAdmin);
 app.use(loggeIn);
-
-// app.use((req, res, next) => {
-//   res.locals.user = req.session.user;
- 
-//   next();
-
-// });
-
 
 // View engine
 app.set('view engine', 'ejs');

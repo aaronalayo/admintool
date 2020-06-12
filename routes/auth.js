@@ -12,7 +12,6 @@ const sendEmail = require("../mailer");
 route.post("/login", async (req,res) => {
   
   const { username, password } = req.body;
-
   const adminRole = await Role.query().select().where({role: 'ADMIN'});
   const users = await User.query().select();
 
@@ -47,63 +46,63 @@ route.post("/login", async (req,res) => {
   }
       
 });
-route.post("/signup", async (req, res) => {
-  //username, password, repeat password, email
-  const { username, password, passwordRepeat, email } = req.body;
+// route.post("/signup", async (req, res) => {
+//   //username, password, repeat password, email
+//   const { username, password, passwordRepeat, email } = req.body;
 
-  const isPasswordTheSame = password === passwordRepeat;
+//   const isPasswordTheSame = password === passwordRepeat;
 
-  if (username && password && isPasswordTheSame) {
-    if (password.length < 8) {
-      return res.render('signuppage/signup', {message: "Password does not fulfill the requirements."});
-    } else {
-      try {
-        // 1.check if username exist
-        const userFound = await User.query()
-          .select()
-          .where({ username: username })
-          .limit(1);
-        if (userFound.length > 0) {
-          // 2.do if else check if it exist and give response
-          return res.render('signuppage/signup' ,{ message: "User already exist" });
-        } else {
-          const defaultUserRole = await Role.query()
-            .select()
-            .where({ role: "USER" });
+//   if (username && password && isPasswordTheSame) {
+//     if (password.length < 8) {
+//       return res.render('signuppage/signup', {message: "Password does not fulfill the requirements."});
+//     } else {
+//       try {
+//         // 1.check if username exist
+//         const userFound = await User.query()
+//           .select()
+//           .where({ username: username })
+//           .limit(1);
+//         if (userFound.length > 0) {
+//           // 2.do if else check if it exist and give response
+//           return res.render('signuppage/signup' ,{ message: "User already exist" });
+//         } else {
+//           const defaultUserRole = await Role.query()
+//             .select()
+//             .where({ role: "USER" });
 
-          const hashedPassword = await bcrypt.hash(password, saltRounds);
-          // 3.insert in db
-          const createdUser = await User.query().insert({
-            username: username,
-            password: hashedPassword,
-            email: email,
+//           const hashedPassword = await bcrypt.hash(password, saltRounds);
+//           // 3.insert in db
+//           const createdUser = await User.query().insert({
+//             username: username,
+//             password: hashedPassword,
+//             email: email,
 
-            roleId: defaultUserRole[0].id,
-          });
+//             roleId: defaultUserRole[0].id,
+//           });
 
-          const mailTo = createdUser.email;
-          const newUser = createdUser.username;
+//           const mailTo = createdUser.email;
+//           const newUser = createdUser.username;
 
-          sendEmail(
-            mailTo,
-            "User account created",
-            "Hello " + newUser + " your account has been created."
-          );
-          return res.render('signuppage/signup',{ message:  `${createdUser.username} has been created`});
+//           sendEmail(
+//             mailTo,
+//             "User account created",
+//             "Hello " + newUser + " your account has been created."
+//           );
+//           return res.render('signuppage/signup',{ message:  `${createdUser.username} has been created`});
 
           
-        }
-      } catch (error) {
-        return res.render('signuppage/signup',{ message: 'Something went wrong with database'});
+//         }
+//       } catch (error) {
+//         return res.render('signuppage/signup',{ message: 'Something went wrong with database'});
 
-      }
-    }
-  } else if (password && passwordRepeat && !isPasswordTheSame) {
-    return res.render('signuppage/signup',{ message: "Password does not match: password and confirm password"});
-  } else {
-    return res.render('signuppage/signup',{ message: "Missing fields, either username, password or confirm password",});
-  }
-});
+//       }
+//     }
+//   } else if (password && passwordRepeat && !isPasswordTheSame) {
+//     return res.render('signuppage/signup',{ message: "Password does not match: password and confirm password"});
+//   } else {
+//     return res.render('signuppage/signup',{ message: "Missing fields, either username, password or confirm password",});
+//   }
+// });
 
 route.post("/forgot", async (req, res) => {
   const { email, newPassword, newPasswordRepeat } = req.body;
