@@ -49,7 +49,6 @@ app.use( express.static( "public" ) );
 
 //  apply to all requests
 app.use("/login", limiter);
-app.use("/signup", limiter);
 app.use("/dashboard", limiter);
 app.use("/login", limiter);
 app.use("/admin", limiter);
@@ -102,9 +101,7 @@ app.get("/login", (req, res) => {
 }        
 });
 
-app.get("/signup", (req, res) => {
-  res.render("signuppage/signup");
-});
+
 
 app.get("/admin", checkAdmin, (req, res) => {
   if(req.session.user) {
@@ -118,13 +115,13 @@ app.get("/forgot", (req, res) => {
   res.render("forgotpage/forgot");
 });
 
-app.get("/graphs", (req, res) => {
-  if(req.session.user) {
-    res.render('graphs/graphs', {username: req.session.user[0].username});   
-}else {
-  return res.render('graphs/graphs', {username: null});
-}          
-});
+// app.get("/graphs", (req, res) => {
+//   if(req.session.user) {
+//     res.render('graphs/graphs', {username: req.session.user[0].username});   
+// }else {
+//   return res.render('graphs/graphs', {username: null});
+// }          
+// });
 
 // app.get("/device", check,(req, res) => {
 //   if(req.session.user) {

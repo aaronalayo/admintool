@@ -1,0 +1,69 @@
+
+
+ <%- include ('../navbarpage/navbar') %>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+ <% 
+ if(userData.length!=0){
+   var i=1;
+   userData.forEach(function(user){
+   %>
+ <form action="/user/update/<%=user.id %>" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-10">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" value="<%=user.username %>" name="username" id="username" placeholder="Username">
+          </div> 
+      <div class="form-group col-md-10">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" value="<%=user.email %>" name="email" id="email" placeholder="Email">
+      </div>
+      <div class="form-group col-md-10">
+        <label for="organization">Organization</label>
+        <select id="select" name="organization" class="form-control">
+          <option  value="Choose..." selected>Choose...</option> 
+          <option  value="Nordic Re-Finance">Nordic Re-Finance</option> 
+          <option  value="Flying Couch">Flying Couch</option> 
+          <option  value="ObTek">ObTek</option>
+          <option  value="UpSmarting">UpSmarting</option> 
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <button type="submit" class="form-row col-md-8 btn btn-primary" onclick="getOption()">Update</button>
+
+    </div>
+    </div>
+    
+ 
+</div>
+<%  i++; }) %>
+<% } else{ %>
+<tr>
+  <td colspan="7">No Data Found</td>
+</tr>
+<% } %>
+
+<%if(typeof message == "undefined"){%>
+    <div></div>
+<% } else { %>
+    <div class="error"> <%= message%> </div> 
+<%}%>
+  </form>
+
+
+  <script type="text/javascript">
+    function getOption() {
+      selectElement =
+        document.querySelector('#select');
+  
+      output = selectElement.value;
+      $('#organization').val(output)
+      console.log(output)
+  
+  
+    } 
+  </script>
+  
+  
+<%- include ('../footerpage/footer') %>

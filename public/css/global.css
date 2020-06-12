@@ -93,11 +93,7 @@ p.capitalize {
 
    
   }
-  
-  .login-heading {
-    font-weight: 300;
-  }
-  
+
   
   .form-label-group {
     position: relative;
@@ -107,5 +103,8 @@ p.capitalize {
 
 
   
-
+#btn-back {
+  position: absolute;
+  padding-left: 10px;
+}
   

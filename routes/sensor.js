@@ -24,7 +24,7 @@ route.get('/device/sensor/:id', async (req, res) => {
                 const measurement = await Measurement.query().select("time", "value")
                 .whereBetween("time", [start, end])
                 .where({ sensor_id: sensorId })
-                .orderBy("time")
+                .orderBy("time", 'desc')
                 .limit(limit);
         
               const labels = [];

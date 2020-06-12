@@ -11,13 +11,14 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
 const sendEmail = require("../mailer");
+const { user } = require('../config/psqlCredentials.js');
 
 
 route.get('/admin/users', checkAdmin, async (req, res) => {
   if(req.session.user) {
     try {  
     const users = await User.query().select().withGraphJoined('role').withGraphJoined('organization');
-    res.render("userspage/users", { userData: users, username: req.session.user[0].username});
+    res.render("userspage/users", { userData: users, username: req.session.user[0].username, link: "/user/edit/", linkDelete:'/user/delete/'});
   } catch (e) {
     res.render("userspage/users", { message: "Error in Fetching users" , username: req.session.user[0].username});
   }
@@ -108,8 +109,8 @@ route.post('/adduser',checkAdmin, async (req, res) => {
         }
       
       
-      } catch (error) {
-        console.log(error)
+      } catch (e) {
+        console.log(e);
         return res.render('adduserpage/adduser',{ message: 'Something went wrong with database', username: req.session.user[0].username});
         
       }
@@ -117,8 +118,68 @@ route.post('/adduser',checkAdmin, async (req, res) => {
   
   }
   } 
+  } else {
+    return res.redirect('/login');
   }
 });
 
+route.get('/user/edit/:id', async(req, res) => {
+  if(req.session.user) {
+    const userId = req.params.id;
+    try {
+      const userToEdit = await User.query().select().where({'id': userId}).limit(1);
 
+      return res.render('editpage/edit', {userData: userToEdit, username: req.session.user[0].username});
+      
+    } catch (e) {
+      console.log(e);
+      return res.render('editpage/edit',{ message: 'Something went wrong with database', username: req.session.user[0].username});
+    }
+  } else {
+    return res.redirect('/login');
+  }
+
+});
+
+route.post('/user/update/:id', async (req, res) => {
+  if(req.session.user) {
+    const userId =  req.params.id;
+    const { username, email, organization } = req.body;
+  
+    const expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(expression.test(String(email).toLowerCase()) == false) {
+      
+      return res.render('editpage/edit',{message: "Email is not valid.",userData: [], username: req.session.user[0].username});
+    }else {
+   
+   try {
+    const organizationUuid = await Organization.query().select('organizationUuid').where({'name': organization});
+    await User.query().where({'id': userId}).update({'username':username, 'email': email, 'organization_uuid':organizationUuid[0].organizationUuid});
+    return res.redirect('/admin/users');
+
+   } catch (error) {
+    return res.render('editpage/edit',{ message: 'Something went wrong with database', userData:[],username: req.session.user[0].username});
+     
+   }
+  }
+
+  } else {
+    return res.redirect('/login');
+  }
+});
+
+route.get('/user/delete/:id', async (req, res) => {
+  if(req.session.user) {
+    const userId = req.params.id;
+    try {
+      const userToDelete = await User.query().where({'id':userId}).del();
+      return res.redirect('/admin/users');
+    } catch (error) {
+      return res.render('/admin/users',{ message: 'Something went wrong with database', userData:user,username: req.session.user[0].username});
+    }
+  } else {
+    return res.redirect('/login')
+  }
+
+});
 module.exports = route;

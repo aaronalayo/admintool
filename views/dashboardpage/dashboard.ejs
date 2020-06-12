@@ -77,8 +77,13 @@
 </tbody>
 </div>
 </div>
+<button id="btn-back" class="btn btn-outline-primary" data-toggle="button" onclick="goBack()">Go Back</button>
 
-
+<script>
+  function goBack() {
+    window.history.back();
+  }
+  </script>
 <%- include ('../footerpage/footer') %>
 
 

@@ -48,7 +48,7 @@
                 <ul class=" nav navbar-nav navbar-right">
                     <% if (loggedIn == null) { %>
                        
-                        <li><a href="/login">Login</a></li>
+                        <li><a href="/login">Log In</a></li>
           
                         
                     <% }else if (isAdmin !== null) { %> 
@@ -59,7 +59,7 @@
                         
                     <% } else { %>
                         <li><p class="text-info large-centered">logged as <%= username %></p></li>
-                        <li><a href="/logout">Log out</a></li>    
+                        <li><a href="/logout">Log Out</a></li>    
                     <% } %>
                 </ul>
             </div>
