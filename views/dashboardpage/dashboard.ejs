@@ -1,15 +1,18 @@
 
 <%- include ('../navbarpage/navbar') %>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 <table class="table table-hover table-responsive table-bordered">
-  <thead>
+  <thead class="thead-dark">
+    <tr>
+      <h3>User</h3>
+     </tr>
     <tr>
       <th scope="col">Username</th>
       <th scope="col">Email Address</th>
       <th scope="col">Organization</th>
-      
-      <!-- <th scope="col">Edit</th>
-      <th scope="col">Delete</th> -->
     </tr>
   </thead>
   
@@ -23,8 +26,6 @@
     <td><%=users.username %></td>
     <td><%=users.email %></td>
     <td><%=users.organization.name %></td>
-    <!-- <td><a href="/user/edit/<%=users.id%>">Edit</a></td>
-    <td><a href="/user/delete/<%=users.id%>">Delete</a></td> -->
   </tr>
   <%  i++; }) %>
   <% } else{ %>
@@ -50,6 +51,7 @@
       var i=1;
       devices.forEach(function(devices){
       %>
+      <tbody class="tbody">
     <tr>
   
       <td><%=devices.name %></td>
@@ -68,13 +70,13 @@
   </table>
   
 
-<tbody class="tbody">
+
     <%if(typeof message == "undefined"){%>
         <div></div>
     <% } else { %>
         <div class="error"> <%= message%> </div> 
     <%}%>
-</tbody>
+
 </div>
 </div>
 <button id="btn-back" class="btn btn-outline-primary" data-toggle="button" onclick="goBack()">Go Back</button>
