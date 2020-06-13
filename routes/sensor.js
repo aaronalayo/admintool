@@ -1,16 +1,11 @@
 const route = require('express').Router();
 
-
-
 const Sensor = require('../model/Sensor.js');
-const Device = require('../model/Device.js');
 const Measurement = require('../model/Measurement.js');
-
 
 
 route.get('/device/sensor/:id', async (req, res) => {
     if(req.session.user) {
-
 
         const sensorId = req.params.id;
         const start = "2020-05-28T07:40:27.665Z";            
@@ -38,33 +33,16 @@ route.get('/device/sensor/:id', async (req, res) => {
               }
               res.render("sensorpage/sensor", {labels: labels,dataset: dataset, sensor: sensor[0].sensorId, sensorDetail: sensor, username: req.session.user[0].username,
               });
-            
-          
-
         } catch (error) {
             res.render("sensorpage/sensor", { message: "Error in Fetching data" , username: req.session.user[0].username});
         }
+        sensorId = defaultSensorId;
 
     }else {
         return res.redirect("/login");
     }
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

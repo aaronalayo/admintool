@@ -13,83 +13,175 @@
 </div>
 
 <script>   
-         
-
-var ctx = document.getElementById('chart').getContext('2d');
-
-    var chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels:<%-JSON.stringify(labels)%>,
-        datasets: [{
-            label:<%-JSON.stringify(sensor)%>,
-            data: <%-JSON.stringify(dataset)%>,
-            backgroundColor: [
-                // 'rgba(255, 99, 132, 0.2)',
-                // 'rgba(54, 162, 235, 0.2)',
-                // 'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                // 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                // // 'rgba(54, 162, 235, 1)',
-                // // 'rgba(255, 206, 86, 1)',
-                // 'rgba(75, 192, 192, 1)',
-                // 'rgba(153, 102, 255, 1)',
-                // 'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true, 
-        maintainAspectRatio: false,
-        tooltips: {
-           
-        },
-        hover: {
-            mode: 'dataset',
-            mode: 'point',
-        },
-        legend: {
-            labels: {
-            fontSize: 18
-            }
-        },
-        title: {
-            display: true,
-            text: 'Measurements from sensor '
-    },
-        scales: {
-            xAxes: [{
-                
-                scaleLabel: {
+Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+  Chart.defaults.global.defaultFontColor = '#292b2c';
+  var ctx = document.getElementById('chart').getContext('2d');
+  
+      var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels:<%-JSON.stringify(labels)%>,
+          datasets: [{
+              label:<%-JSON.stringify(sensor)%>,
+              data: <%-JSON.stringify(dataset)%>,
+              backgroundColor: [
+                      "rgba(2,117,216,0.2)",
+                  // 'rgba(255, 99, 132, 0.2)',
+                  // 'rgba(54, 162, 235, 0.2)',
+                  // 'rgba(255, 206, 86, 0.2)',
+                  // 'rgba(75, 192, 192, 0.2)',
+                  // 'rgba(153, 102, 255, 0.2)',
+                  // 'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                    "rgba(2,117,216,1)",
+                  // 'rgba(255, 99, 132, 1)',
+                  // 'rgba(54, 162, 235, 1)',
+                  // 'rgba(255, 206, 86, 1)',
+                  // 'rgba(75, 192, 192, 1)',
+                  // 'rgba(153, 102, 255, 1)',
+                  // 'rgba(255, 159, 64, 1)'
+              ],
+              lineTension: 0.3,
+              borderWidth: 0.5,
+              pointRadius: 5,
+              pointBackgroundColor: "rgba(255, 99, 132, 1)",
+              pointBorderColor: "rgba(255,255,255,0.8)",
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(2,117,216,1)",
+              pointHitRadius: 50,
+              pointBorderWidth: 2,
+          }]
+      },
+      options: {
+          responsive: true, 
+          maintainAspectRatio: false,
+          tooltips: {
+             
+          },
+          hover: {
+              mode: 'dataset',
+              mode: 'point',
+          },
+          legend: {
+              labels: {
+              fontSize: 18
+              }
+          },
+          title: {
+              display: true,
+              text: 'Measurements from sensor '
+      },
+          scales: {
+              xAxes: [{
+                  
+                  scaleLabel: {
+                      display: false,
+                  },
+                  gridLines: {
                     display: true,
-                },
-                ticks: {
-                callback: function(value) { 
-                return new Date(value).toLocaleDateString('dk-DK', {hour:'numeric', minute:'numeric'}); 
-    },
-},
-        
-     }],
-            
-            yAxes: [{
-                
-                ticks: {
-                    beginAtZero: true
-           
+                  },
+                  ticks: {
+                  callback: function(value) { 
+                  return new Date(value).toLocaleDateString('dk-DK', {hour:'numeric', minute:'numeric'}); 
+              },
+          },    gridLines: {
+                  color: "rgba(0, 0, 0, .125)",
                 }
-            }],
-            
-        }
-    }
-    
-});
+                  
+              }],
+              
+              yAxes: [{
+                  
+                  ticks: {
+                      beginAtZero: true
+             
+                  },
+                  gridLines: {
+                     color: "rgba(0, 0, 0, .125)",
+                }
+              }],
+              
+          }
+      }
+      
+  });    
 
-</script>
+// var ctx = document.getElementById('chart').getContext('2d');
+
+//     var chart = new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//         labels:<%-JSON.stringify(labels)%>,
+//         datasets: [{
+//             label:<%-JSON.stringify(sensor)%>,
+//             data: <%-JSON.stringify(dataset)%>,
+//             backgroundColor: [
+//                 // 'rgba(255, 99, 132, 0.2)',
+//                 // 'rgba(54, 162, 235, 0.2)',
+//                 // 'rgba(255, 206, 86, 0.2)',
+//                 'rgba(75, 192, 192, 0.2)',
+//                 // 'rgba(153, 102, 255, 0.2)',
+//                 'rgba(255, 159, 64, 0.2)'
+//             ],
+//             borderColor: [
+//                 'rgba(255, 99, 132, 1)',
+//                 // // 'rgba(54, 162, 235, 1)',
+//                 // // 'rgba(255, 206, 86, 1)',
+//                 // 'rgba(75, 192, 192, 1)',
+//                 // 'rgba(153, 102, 255, 1)',
+//                 // 'rgba(255, 159, 64, 1)'
+//             ],
+//             borderWidth: 1
+//         }]
+//     },
+//     options: {
+//         responsive: true, 
+//         maintainAspectRatio: false,
+//         tooltips: {
+           
+//         },
+//         hover: {
+//             mode: 'dataset',
+//             mode: 'point',
+//         },
+//         legend: {
+//             labels: {
+//             fontSize: 18
+//             }
+//         },
+//         title: {
+//             display: true,
+//             text: 'Measurements from sensor '
+//     },
+//         scales: {
+//             xAxes: [{
+                
+//                 scaleLabel: {
+//                     display: true,
+//                 },
+//                 ticks: {
+//                 callback: function(value) { 
+//                 return new Date(value).toLocaleDateString('dk-DK', {hour:'numeric', minute:'numeric'}); 
+//     },
+// },
+        
+//      }],
+            
+//             yAxes: [{
+                
+//                 ticks: {
+//                     beginAtZero: true
+           
+//                 }
+//             }],
+            
+//         }
+//     }
+    
+// });
+
+// </script>
 <div>
 
 </div>
