@@ -92,6 +92,7 @@ route.get('/admin/graphs', async (req, res) => {
                 username: req.session.user[0].username,
               });
             }
+            sensorId = defaultSensorId;
           
           } catch (e) {
             res.render("graphs/graphs", {message: "Error in Fetching data",username: req.session.user[0].username, labels:[],dataset: [],

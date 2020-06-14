@@ -123,7 +123,7 @@ route.post('/adduser',checkAdmin, async (req, res) => {
   }
 });
 
-route.get('/user/edit/:id', async(req, res) => {
+route.get('/user/edit/:id', checkAdmin, async(req, res) => {
   if(req.session.user) {
     const userId = req.params.id;
     try {
@@ -141,7 +141,7 @@ route.get('/user/edit/:id', async(req, res) => {
 
 });
 
-route.post('/user/update/:id', async (req, res) => {
+route.post('/user/update/:id', checkAdmin, async (req, res) => {
   if(req.session.user) {
     const userId =  req.params.id;
     const { username, email, organization } = req.body;
@@ -168,7 +168,7 @@ route.post('/user/update/:id', async (req, res) => {
   }
 });
 
-route.get('/user/delete/:id', async (req, res) => {
+route.get('/user/delete/:id', checkAdmin, async (req, res) => {
   if(req.session.user) {
     const userId = req.params.id;
     try {
