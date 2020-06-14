@@ -1,7 +1,7 @@
 const { Model } = require('objection');
 
 const Organization = require('./Organization.js');
-const Sensor = require(('./Sensor.js'))
+
 
 class Device extends Model {
   static tableName = 'devices';

@@ -4,7 +4,7 @@ const route = require('express').Router();
 const Sensor = require('../model/Sensor.js');
 const Device = require('../model/Device.js');
 
-
+//Gets the device details by id
 route.get('/dashboard/device/:id', async (req, res) => {
     if(req.session.user) {
 

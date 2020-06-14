@@ -8,6 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.min.js"></script>
 
 
+
+
 <div class="chart-container" style="position: relative; height:50vh; width:75vw">
   <canvas id="chart"></canvas>
 </div>
@@ -180,11 +182,8 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
 //     }
     
 // });
+</script>
 
-// </script>
-<div>
-
-</div>
 <form>
 <div class="form-row" id="my-form-id">
     <div class="form-group col-md-2">
@@ -207,8 +206,9 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
         <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDataSubmitted()" value="Submit form">Send</button>
         <a href="/admin" class="btn btn-primary" data-toggle="button">Go Back</a>
     </div>
+    <p id="message"></p>
 </div>
-       <div class="form-group col-md-2">
+<div class="form-group col-md-2">
     <%if(typeof message == "undefined"){%>
         <div></div>
       <% } else { %>
@@ -216,7 +216,7 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
       <%}%>
     </div>
 </form>
- 
+
 <script>
     
     //connect to localhost
@@ -234,10 +234,10 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
           
     }
 
-    // socket.on("graphs", (sensor) => {
+    socket.on("graphs", (message) => {
             
-    //         $('#messages').append(`<div>${sensor.sensorId}</div>`);
-    //     });
+            $('#message').prepend(`<p>${message.message}</p>`);
+        });
 
 
     

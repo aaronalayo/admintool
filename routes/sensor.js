@@ -36,7 +36,7 @@ route.get('/device/sensor/:id', async (req, res) => {
         } catch (error) {
             res.render("sensorpage/sensor", { message: "Error in Fetching data" , username: req.session.user[0].username});
         }
-        sensorId = defaultSensorId;
+       
 
     }else {
         return res.redirect("/login");

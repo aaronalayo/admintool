@@ -7,7 +7,7 @@ class Sensor extends Model {
   static tableName = 'sensors';
 
   static relationMappings = {
-    calibration: {
+    calibrations: {
         relation: Model.BelongsToOneRelation,
         modelClass: Calibration,
         join: {

@@ -6,7 +6,8 @@ const io = require('socket.io')(server);
 module.exports.getIO = function(){
   return io;
 }
-
+const helmet = require('helmet');
+app.use(helmet());
 
 // parse application/json
 app.use(express.urlencoded({ extended: false })); //to get response from
