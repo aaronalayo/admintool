@@ -12,6 +12,7 @@ const saltRounds = 12;
 
 const sendEmail = require("../mailer");
 const { user } = require('../config/psqlCredentials.js');
+const Sensor = require('../model/Sensor.js');
 
 
 route.get('/users', checkAdmin, async (req, res) => {
@@ -34,9 +35,18 @@ route.get('/admin', checkAdmin, async (req, res) => {
     const userRole = await User.query().select().count('role_id').where({'role_id': 2});
     const adminRole = await User.query().select().count('role_id').where({'role_id': 1});
     const numberOfOrganizations = await User.query().countDistinct('organization_uuid').select();
-    const numberDevices = await Device.query().count('device_uuid').select();
-    console.log(numberDevices);
-    res.render("adminpage/admin", {userNumber: usersNumber[0].count, userRole: userRole[0].count, adminRole: adminRole[0].count, username: req.session.user[0].username, organizations: numberOfOrganizations[0].count});
+    const numberOfDevices = await Device.query().count('device_uuid').select();
+    const numberOfSensors = await Sensor.query().count('sensor_uuid').select();
+    
+    res.render("adminpage/admin", {
+      userNumber: usersNumber[0].count, 
+      userRole: userRole[0].count, 
+      adminRole: adminRole[0].count, 
+      username: req.session.user[0].username, 
+      organizations: numberOfOrganizations[0].count,
+      devices: numberOfDevices[0].count,
+      sensors: numberOfSensors[0].count
+      });
   
     
     
@@ -69,7 +79,12 @@ route.post('/user/add',checkAdmin, async (req, res) => {
    //username, password, repeat password, email
   const { username, password, passwordRepeat, email, organization } = req.body;
   
-   
+  if(username === "" || password === "" || email === "" || passwordRepeat === "" || organization == "Choose...") {
+
+    return res.render('adduserpage/add',{message: "Misssing data or empty fields.", username: req.session.user[0].username});
+
+  } else {
+
   const isPasswordTheSame = password === passwordRepeat;
 
   if (username && password && isPasswordTheSame) {
@@ -139,7 +154,7 @@ route.post('/user/add',checkAdmin, async (req, res) => {
         
       }
     }
-  
+  }
   }
   } 
   } else {
@@ -170,6 +185,14 @@ route.post('/user/update/:id', checkAdmin, async (req, res) => {
     const userId =  req.params.id;
     const { username, email, organization } = req.body;
   
+    
+    if(username === "" ||  email === "" || organization == "Choose...") {
+
+      
+      // return res.render('editpage/edit',{message: "Misssing data or empty fields.", userData:[], username: req.session.user[0].username});
+      return res.redirect('/user/edit/'+`${userId}`);
+    } else {
+
     const expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if(expression.test(String(email).toLowerCase()) == false) {
       
@@ -186,7 +209,7 @@ route.post('/user/update/:id', checkAdmin, async (req, res) => {
      
    }
   }
-
+}
   } else {
     return res.redirect('/login');
   }
@@ -195,7 +218,6 @@ route.post('/user/update/:id', checkAdmin, async (req, res) => {
 route.get('/user/delete/:id', checkAdmin, async (req, res) => {
   if(req.session.user) {
     const userId = req.params.id;
-    console.log(userId)
     try {
       await User.query().where({'id':userId}).del();
       return res.redirect('/users');

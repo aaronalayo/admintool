@@ -60,7 +60,7 @@ io.on('connection', socket => {
 
 
 //Displays measurements by sending data to a chart
-route.get('/admin/graphs', async (req, res) => {                                                                                                                                                        
+route.get('/graphs', async (req, res) => {                                                                                                                                                        
   if(req.session.user ) {
 
           try {
@@ -93,11 +93,17 @@ route.get('/admin/graphs', async (req, res) => {
               });
             }
             sensorId = defaultSensorId;
+            limit = defaultLimit;
+            start = defaultStart;
+            end = defaultEnd;
           
           } catch (e) {
             res.render("graphs/graphs", {message: "Error in Fetching data",username: req.session.user[0].username, labels:[],dataset: [],
             sensor: []});
             sensorId = defaultSensorId;
+            limit = defaultLimit;
+            start = defaultStart;
+            end = defaultEnd;
           }
 
     } else{

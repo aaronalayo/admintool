@@ -3,7 +3,6 @@ const route = require('express').Router();
 const Sensor = require('../model/Sensor.js');
 const Measurement = require('../model/Measurement.js');
 
-
 route.get('/device/sensor/:id', async (req, res) => {
     if(req.session.user) {
 

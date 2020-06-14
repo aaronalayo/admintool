@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.min.js"></script>
 
 
-
+<p id="message"></p>
 
 <div class="chart-container" style="position: relative; height:50vh; width:75vw">
   <canvas id="chart"></canvas>
@@ -206,7 +206,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
         <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDataSubmitted()" value="Submit form">Send</button>
         <a href="/admin" class="btn btn-primary" data-toggle="button">Go Back</a>
     </div>
-    <p id="message"></p>
+    
 </div>
 <div class="form-group col-md-2">
     <%if(typeof message == "undefined"){%>

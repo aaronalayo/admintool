@@ -72,7 +72,7 @@
           },
           title: {
               display: true,
-              text: 'Measurements from sensor '
+              text: 'Measurements for last 100 values from sensor '
       },
           scales: {
               xAxes: [{
@@ -116,11 +116,11 @@
          <h3></p>Sensor <%=sensor %></h3>
         </tr>
       <tr>
-        <th scope="col">Sensor Uuid</th>
         <th scope="col">Sensor Id</th>
         <th scope="col">Name</th>
         <th scope="col">Sensor Type</th>
         <th scope="col">Description</th>
+        <th scope="col">Sensor Uuid</th>
         <th scope="col">Unit</th>
         <th scope="col">Calibration Uuid</th>
 
@@ -134,11 +134,11 @@
       sensorDetail.forEach(function(sensor){
       %>
     <tr>
-      <td><%=sensor.sensorUuid %></td>
       <td><%=sensor.sensorId %></td>
       <td><%=sensor.name %></td>
       <td><%=sensor.sensorType %></td>
       <td><%=sensor.description %></td>
+      <td><%=sensor.sensorUuid %></td>
       <td><%=sensor.unit %></td>
       <td><%=sensor.calibrationUuid %></td>
      

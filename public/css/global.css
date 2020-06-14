@@ -48,6 +48,7 @@ p.capitalize {
 
 #welcome{
     font-size: 2em;
+    padding-left: 17em;
 }
 
 #background-image {
@@ -79,7 +80,7 @@ p.capitalize {
 }
 
 .card-body {
-  padding-left: 30%;
+  padding-left: 40%;
 }
 
 
