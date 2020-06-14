@@ -7,7 +7,7 @@
 
  <div class="form-row">
         <div class="form-group col-md-6" >
-            <form action="/adduser" method="post">
+            <form action="/user/add" method="post">
               
                 <div class="form-group col-md-12">
                   <div class="form-row">
@@ -48,23 +48,20 @@
                 <div class="form-group col-md-6" >
                 
                       <input class="btn btn-primary" type="submit" onclick="getOption()" value="Create User"/>
-                      <a href="/admin/users" class="btn btn-primary" >Cancel</a>
-                </div>
-
-
+                      <a href="/users" class="btn btn-primary" >Cancel</a>
+                      <%if(typeof message == "undefined"){%>
+                        <div></div>
+                      <% } else { %>
+                        <div class="error"> <%= message%> </div> 
+                      <%}%>
                 </div>
               </div>
-              <div class="message">
-
-             
-                <%if(typeof message == "undefined"){%>
-                  <div></div>
-                <% } else { %>
-                  <div class="error"> <%= message%> </div> 
-                <%}%>
-              </div>
+            </div>
+           
             </form> 
-    
+          </div>
+        </div>
+            
             
     
 

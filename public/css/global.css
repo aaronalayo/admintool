@@ -77,6 +77,12 @@ p.capitalize {
   position: absolute;
   padding-left: 10px;
 }
+
+.card-body {
+  padding-left: 30%;
+}
+
+
   
 @media (max-width: 575.98px) {
     .navbar-expand-sm > .container,

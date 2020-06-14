@@ -14,13 +14,34 @@ const sendEmail = require("../mailer");
 const { user } = require('../config/psqlCredentials.js');
 
 
-route.get('/admin/users', checkAdmin, async (req, res) => {
+route.get('/users', checkAdmin, async (req, res) => {
   if(req.session.user) {
     try {  
     const users = await User.query().select().withGraphJoined('role').withGraphJoined('organization');
     res.render("userspage/users", { userData: users, username: req.session.user[0].username, link: "/user/edit/", linkDelete:'/user/delete/'});
   } catch (e) {
     res.render("userspage/users", { message: "Error in Fetching users" , username: req.session.user[0].username});
+  }
+} else{
+  return res.redirect("/login");
+}
+});
+
+route.get('/admin', checkAdmin, async (req, res) => {
+  if(req.session.user) {
+    try {  
+    const usersNumber = await User.query().count('id').select();
+    const userRole = await User.query().select().count('role_id').where({'role_id': 2});
+    const adminRole = await User.query().select().count('role_id').where({'role_id': 1});
+    const numberOfOrganizations = await User.query().countDistinct('organization_uuid').select();
+    const numberDevices = await Device.query().count('device_uuid').select();
+    console.log(numberDevices);
+    res.render("adminpage/admin", {userNumber: usersNumber[0].count, userRole: userRole[0].count, adminRole: adminRole[0].count, username: req.session.user[0].username, organizations: numberOfOrganizations[0].count});
+  
+    
+    
+  } catch (e) {
+    res.render("adminpage/admin", {message: "Error in Fetching users" , username: req.session.user[0].username});
   }
 } else{
   return res.redirect("/login");
@@ -43,7 +64,7 @@ route.get('/dashboard', check, async (req, res) => {
   }
 } );
 
-route.post('/adduser',checkAdmin, async (req, res) => {
+route.post('/user/add',checkAdmin, async (req, res) => {
   if(req.session.user) {
    //username, password, repeat password, email
   const { username, password, passwordRepeat, email, organization } = req.body;
@@ -53,13 +74,13 @@ route.post('/adduser',checkAdmin, async (req, res) => {
 
   if (username && password && isPasswordTheSame) {
     if (password.length < 8) {
-      return res.render('adduserpage/adduser', {message: "Password does not fulfill the requirements.", username: req.session.user[0].username});
+      return res.render('adduserpage/add', {message: "Password does not fulfill the requirements.", username: req.session.user[0].username});
     
     } else {
       const expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       if(expression.test(String(email).toLowerCase()) == false) {
         
-        return res.render('adduserpage/adduser', {message: "Email is not valid.", username: req.session.user[0].username});
+        return res.render('adduserpage/add', {message: "Email is not valid.", username: req.session.user[0].username});
       }else {
 
       try {
@@ -79,22 +100,25 @@ route.post('/adduser',checkAdmin, async (req, res) => {
         // const organization = await Organization
         if (userFound.length > 0) {
           // 2.do if else check if it exist and give response
-          return res.render('adduserpage/adduser',{ message: "User already exist" , username: req.session.user[0].username});
-       
-          
+          return res.render('adduserpage/add',{ message: "User already exist." , username: req.session.user[0].username});
           }else {
-          const defaultUserRole = await Role.query().select().where({ role: "USER" });
+            const userEmail = await User.query().select().where({'email':email});
+            if(userEmail.length > 0) {
+              return res.render('adduserpage/add',{ message: "Email already exist." , username: req.session.user[0].username});
+            } else {
+
+              const defaultUserRole = await Role.query().select().where({ role: "USER" });
          
           
-          const hashedPassword = await bcrypt.hash(password, saltRounds);
-          // 3.insert in db
-          const createdUser = await User.query().insert({
-            username: username,
-            password: hashedPassword,
-            email: email,
-            roleId: defaultUserRole[0].id,
-            organization_uuid: organization_uuid[0],
-          });
+              const hashedPassword = await bcrypt.hash(password, saltRounds);
+              // 3.insert in db
+              const createdUser = await User.query().insert({
+                username: username,
+                password: hashedPassword,
+                email: email,
+                roleId: defaultUserRole[0].id,
+                organization_uuid: organization_uuid[0],
+              });
 
           const mailTo = createdUser.email;
           const newUser = createdUser.username;
@@ -104,14 +128,14 @@ route.post('/adduser',checkAdmin, async (req, res) => {
             "User account created",
             "Hello " + newUser + " your account has been created."
           );
-          res.redirect("/admin/users");
+          res.redirect("/users");
           
+          }
         }
-      
       
       } catch (e) {
         console.log(e);
-        return res.render('adduserpage/adduser',{ message: 'Something went wrong with database', username: req.session.user[0].username});
+        return res.render('adduserpage/add',{ message: 'Something went wrong with database', username: req.session.user[0].username});
         
       }
     }
@@ -155,7 +179,7 @@ route.post('/user/update/:id', checkAdmin, async (req, res) => {
    try {
     const organizationUuid = await Organization.query().select('organizationUuid').where({'name': organization});
     await User.query().where({'id': userId}).update({'username':username, 'email': email, 'organization_uuid':organizationUuid[0].organizationUuid});
-    return res.redirect('/admin/users');
+    return res.redirect('/users');
 
    } catch (error) {
     return res.render('editpage/edit',{ message: 'Something went wrong with database', userData:[],username: req.session.user[0].username});
@@ -171,11 +195,12 @@ route.post('/user/update/:id', checkAdmin, async (req, res) => {
 route.get('/user/delete/:id', checkAdmin, async (req, res) => {
   if(req.session.user) {
     const userId = req.params.id;
+    console.log(userId)
     try {
-      const userToDelete = await User.query().where({'id':userId}).del();
-      return res.redirect('/admin/users');
+      await User.query().where({'id':userId}).del();
+      return res.redirect('/users');
     } catch (error) {
-      return res.render('/admin/users',{ message: 'Something went wrong with database', userData:user,username: req.session.user[0].username});
+      return res.render('/users',{ message: 'Something went wrong with database', userData:user,username: req.session.user[0].username});
     }
   } else {
     return res.redirect('/login')

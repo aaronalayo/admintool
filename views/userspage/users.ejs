@@ -3,7 +3,7 @@
   
   
   
-  </style>
+
   <table class="table table-hover table-responsive table-bordered">
     <thead>
       <tr>
@@ -16,7 +16,7 @@
         <th scope="col">Delete</th>
       </tr>
     </thead>
-    
+    <tbody class="tbody">
     <% 
     if(userData.length!=0){
       var i=1;
@@ -36,12 +36,13 @@
     <tr>
       <td colspan="7">No Data Found</td>
     </tr>
+  </tbody>
     <% } %>
   </table>
 
-  <tbody class="tbody">
-  </tbody>
-  <a href="/adduser" class="btn btn-primary" data-toggle="button"></type>
+  
+ 
+  <a href="/user/add" class="btn btn-primary" data-toggle="button"></type>
     Add User
    </a>
   <a href="/admin" class="btn btn-primary" data-toggle="button">Go Back</a>

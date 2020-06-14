@@ -86,9 +86,9 @@ app.get('/', (req, res) => {
 }        
 });
 
-app.get("/adduser", checkAdmin,(req, res) => {
+app.get("/user/add", checkAdmin,(req, res) => {
   if(req.session.user) {
-  res.render("adduserpage/adduser", {  username: req.session.user[0].username});
+  res.render("adduserpage/add", {  username: req.session.user[0].username});
 } else{
   return res.redirect("/login");
 }
@@ -104,13 +104,13 @@ app.get("/login", (req, res) => {
 
 
 
-app.get("/admin", checkAdmin, (req, res) => {
-  if(req.session.user) {
-  res.render("adminpage/admin", {username: req.session.user[0].username});
-} else{
-  return res.redirect("/login");
-}
-});
+// app.get("/admin", checkAdmin, (req, res) => {
+//   if(req.session.user) {
+//   res.render("adminpage/admin", {username: req.session.user[0].username});
+// } else{
+//   return res.redirect("/login");
+// }
+// });
 
 app.get("/forgot", (req, res) => {
   res.render("forgotpage/forgot");
