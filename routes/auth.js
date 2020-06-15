@@ -37,7 +37,8 @@ route.post("/login", async (req,res) => {
                   }
               
           }catch(error){
-              return res.status(500).send({response: "Something went wrong with the database"});
+              
+              return res.render('loginpage/login', {message: "Something went wrong with database" });
           }
 
   }else {
