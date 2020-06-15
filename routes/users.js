@@ -182,7 +182,7 @@ route.post('/users/update/:id', checkAdmin, async (req, res) => {
   }
 });
 
-route.get('/user/delete/:id', checkAdmin, async (req, res) => {
+route.get('/users/delete/:id', checkAdmin, async (req, res) => {
   if(req.session.user) {
     const userId = req.params.id;
     try {
