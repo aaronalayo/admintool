@@ -153,26 +153,63 @@
     <% } %>
   </table>
         
-  <button id="btn-back" class="btn btn-outline-primary" data-toggle="button" onclick="goBack()">Go Back</button>
-
-     
-     
-         <div class="form-group col-md-2">
-      <%if(typeof message == "undefined"){%>
-          <div></div>
-        <% } else { %>
-          <div class="error" role="alert"> <%= message%> </div> 
-        <%}%>
-      </div>
-
+      <form>
+        <div class="form-row" id="my-form-id">
+            <div class="form-group col-md-2">
+                <label>Limit</label>
+                <input type="number" class="form-control" id="new-limit" placeholder="Limit">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Start Date</label>
+                <input type="datetime-local" class="form-control" id="start-date" placeholder="Start Date">
+            </div>
+            <div class="form-group col-md-4">
+                <label>End Date</label>
+                <input type="datetime-local" class="form-control" id="end-date" placeholder="End Date">
+            </div>
+            <div class="form-group col-md-4">
+                <button id="btn-send" type="submit" class="btn btn-primary" onclick="onDataSubmitted()" value="Submit form">Send</button>
+                <!-- <button class="btn btn-primary" data-toggle="button" onclick="goBack()">Go Back</button> -->
+                <a href="/dashboard" class="btn btn-primary" data-toggle="button">Go Back</a>
+            </div>
+            
+        </div>
+        <div class="form-group col-md-2">
+            <%if(typeof message == "undefined"){%>
+                <div></div>
+              <% } else { %>
+                <div class="error" role="alert"> <%= message%> </div> 
+              <%}%>
+            </div>
+        </form>
    
+      <script>
+    
+        //connect to localhost
+        const socket = io.connect("localhost:2000");
+        //Connec to public ip
+        // const socket = io.connect("http://35.228.37.83:80");
+        function onDataSubmitted() {
+                const newLimit = $('#new-limit').val();
+                const startDate = $('#start-date').val();
+                const endDate = $('#end-date').val()
+                
+                socket.emit( 'graphs', {startDate: startDate, endDate:endDate, newLimit: newLimit});
+              
+        }
+    
+        socket.on("graphs", (message) => {
+                
+                $('#message').prepend(`<p>${message.message}</p>`);
+            });
 
+    </script>
 
-<script>
-function goBack() {
-  window.history.back();
-}
-</script>
+<!-- <script>
+  function goBack() {
+    window.history.back();
+  }
+  </script> -->
 
 
 <%- include ('../footerpage/footer') %>
