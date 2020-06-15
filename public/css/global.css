@@ -86,5 +86,9 @@ p.capitalize {
 
   
 .chart-container {
-    padding-right: 10%;
+    padding-right: 5%;
+}
+
+#sensor-form {
+    padding-left: 10%;
 }
