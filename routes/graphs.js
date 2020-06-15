@@ -44,8 +44,8 @@ io.on('connection', socket => {
       // start = moment((new Date(startDate).toISOString())).add(2,'hours') == "" ? defaultStart: startDate;
       // end = moment(new Date(endDate).toISOString()).add(2,'hours')== "" ? end:endDate; 
 
-      start = moment((new Date(startDate).toISOString())).add(2,'hours') == "" ? defaultStart: startDate;
-      end = moment(new Date(endDate).toISOString()).add(2,'hours')== "" ? end:endDate; 
+      start = moment((new Date(startDate).toISOString())) == "" ? defaultStart: startDate;
+      end = moment(new Date(endDate).toISOString())== "" ? end:endDate; 
 
 
       // sends back to the very same client
