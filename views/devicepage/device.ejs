@@ -22,7 +22,7 @@
       deviceData.forEach(function(device){
       %>
     <tr>
-  
+      
       <td><%=device.name %></td>
       <td><%=device.description %></td>
       <td><a href="<%= link %>" role="button">See Location</a></td>
@@ -75,13 +75,7 @@
     </tr>
     <% } %>
   </table>
-  <button class="btn btn-outline-primary" data-toggle="button" onclick="goBack()">Go Back</button>
+  <a href="/dashboard" class="btn btn-primary" data-toggle="button">Go Back</a>
 
 
 <%- include ('../footerpage/footer') %>
-
-<script>
-  function goBack() {
-    window.history.back();
-  }
-  </script>

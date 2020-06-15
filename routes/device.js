@@ -16,7 +16,8 @@ route.get('/dashboard/device/:id', async (req, res) => {
             const sensors = await Sensor.query().select().where({'device_uuid': device_uuid}).orderBy('sensor_id', 'asc');
             
 
-            res.render("devicepage/device", { deviceData: device, sensorsData: sensors, username: req.session.user[0].username, link:`http://maps.google.com/maps?q=${device[0].location.x},${device[0].location.y}`, linkSensor:"/device/sensor/"});
+            res.render("devicepage/device", { deviceData: device, deviseId: device[0].device_uuid, sensorsData: sensors, username: req.session.user[0].username, 
+                link:`http://maps.google.com/maps?q=${device[0].location.x},${device[0].location.y}`, linkSensor:"/dashboard/device/"+`${device_uuid}`+"/sensor/"});
 
         } catch (error) {
             res.render("devicepage/device", { message: "Error in Fetching data" , username: req.session.user[0].username});

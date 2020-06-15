@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
+
 exports.seed = async function(knex) {
   const hashedPassword = await bcrypt.hash('root', saltRounds);
   return knex('roles', 'organizations').select().then(roles =>{
@@ -9,7 +10,5 @@ exports.seed = async function(knex) {
         organization_uuid:'50d09dd8-fb37-4ede-b902-64a5c29d6536'},
       ]);
   })
-    
-
 
 };

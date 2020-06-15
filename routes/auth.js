@@ -87,6 +87,7 @@ route.post("/forgot", async (req, res) => {
   }
 });
 
+//Log out and destroy the session
 route.get("/logout", (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {

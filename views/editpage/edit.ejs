@@ -9,7 +9,7 @@
    var i=1;
    userData.forEach(function(user){
    %>
- <form action="/user/update/<%=user.id %>" method="post">
+ <form action="/users/update/<%=user.id %>" method="post">
     <div class="form-row">
         <div class="form-group col-md-10">
             <label for="username">Username</label>
@@ -67,8 +67,6 @@
     } 
   </script>
 
-  <script>
-
-  </script>
+ 
   
 <%- include ('../footerpage/footer') %>

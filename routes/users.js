@@ -1,19 +1,19 @@
 const route = require('express').Router();
+
 const User = require('../model/User.js');
 const Device = require('../model/Device.js');
 const Organization = require('../model/Organization.js');
 const Role = require("../model/Role.js");
-const checkAdmin = require("../middleware/checkAdmin.js");
+const Sensor = require('../model/Sensor.js');
 
+const checkAdmin = require("../middleware/checkAdmin.js");
 const check = require('../middleware/check.js');
 
 const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
-const sendEmail = require("../mailer");
+const sendEmail = require("../mailer.js");
 const { user } = require('../config/psqlCredentials.js');
-const Sensor = require('../model/Sensor.js');
-
 
 route.get('/users', checkAdmin, async (req, res) => {
   if(req.session.user) {
@@ -28,41 +28,12 @@ route.get('/users', checkAdmin, async (req, res) => {
 }
 });
 
-route.get('/admin', checkAdmin, async (req, res) => {
-  if(req.session.user) {
-    try {  
-    const usersNumber = await User.query().count('id').select();
-    const userRole = await User.query().select().count('role_id').where({'role_id': 2});
-    const adminRole = await User.query().select().count('role_id').where({'role_id': 1});
-    const numberOfOrganizations = await User.query().countDistinct('organization_uuid').select();
-    const numberOfDevices = await Device.query().count('device_uuid').select();
-    const numberOfSensors = await Sensor.query().count('sensor_uuid').select();
-    
-    res.render("adminpage/admin", {
-      userNumber: usersNumber[0].count, 
-      userRole: userRole[0].count, 
-      adminRole: adminRole[0].count, 
-      username: req.session.user[0].username, 
-      organizations: numberOfOrganizations[0].count,
-      devices: numberOfDevices[0].count,
-      sensors: numberOfSensors[0].count
-      });
-  
-    
-    
-  } catch (e) {
-    res.render("adminpage/admin", {message: "Error in Fetching users" , username: req.session.user[0].username});
-  }
-} else{
-  return res.redirect("/login");
-}
-});
-
 route.get('/dashboard', check, async (req, res) => {
   if(req.session.user) {
     const username = req.session.user[0].username;
     try {
       const users = await User.query().select().where({'username':username}).withGraphJoined('role').withGraphJoined('organization');
+      
       const devices = await Device.query().select().where({'organizationUuid': users[0].organizationUuid});
 
       res.render("dashboardpage/dashboard",{userData: users, devices: devices, username: req.session.user[0].username,  link: "/dashboard/device/"});
@@ -74,7 +45,8 @@ route.get('/dashboard', check, async (req, res) => {
   }
 } );
 
-route.post('/user/add',checkAdmin, async (req, res) => {
+
+route.post('/users/add',checkAdmin, async (req, res) => {
   if(req.session.user) {
    //username, password, repeat password, email
   const { username, password, passwordRepeat, email, organization } = req.body;
@@ -162,7 +134,7 @@ route.post('/user/add',checkAdmin, async (req, res) => {
   }
 });
 
-route.get('/user/edit/:id', checkAdmin, async(req, res) => {
+route.get('/users/edit/:id', checkAdmin, async(req, res) => {
   if(req.session.user) {
     const userId = req.params.id;
     try {
@@ -180,17 +152,12 @@ route.get('/user/edit/:id', checkAdmin, async(req, res) => {
 
 });
 
-route.post('/user/update/:id', checkAdmin, async (req, res) => {
+route.post('/users/update/:id', checkAdmin, async (req, res) => {
   if(req.session.user) {
     const userId =  req.params.id;
     const { username, email, organization } = req.body;
-  
-    
-    if(username === "" ||  email === "" || organization == "Choose...") {
-
-      
-      // return res.render('editpage/edit',{message: "Misssing data or empty fields.", userData:[], username: req.session.user[0].username});
-      return res.redirect('/user/edit/'+`${userId}`);
+    if(username === "" ||  email === "" || organization == "Choose...") {  
+      return res.redirect('/users/edit/'+`${userId}`);
     } else {
 
     const expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

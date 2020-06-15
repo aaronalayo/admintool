@@ -2,6 +2,7 @@ const route = require('express').Router();
 
 const Measurement = require("../model/Measurement.js");
 const Sensor = require("../model/Sensor.js");
+const Device = require('../model/Device.js');
 
 const server = require('../app.js');
 const io = server.getIO(); 
@@ -111,20 +112,17 @@ route.get('/graphs', async (req, res) => {
     }
   
   });
-  route.get('/device/sensor/:id', async (req, res) => {
+  route.get('/dashboard/device/:deviceId/sensor/:id', async (req, res) => {
     if(req.session.user) {
 
         const sensorId = req.params.id;
-        // const start = "2020-05-28T07:40:27.665Z";            
-        // const end = "2020-05-28T13:40:27.665Z"; 
-        // const limit = 100;
-
+        const deviceId = req.params.deviceId
         
-        
+      
         try {
             const sensor = await Sensor.query().select().where({'sensorId': sensorId});
+            const device = await Device.query().select().where({'device_uuid':deviceId});
 
-            // res.render("sensorpage/sensor", { sensor: sensor[0].sensorId,sensorDetail: sensor, username: req.session.user[0].username});
                 const measurement = await Measurement.query().select("time", "value")
                 .whereBetween("time", [start, end])
                 .where({ sensor_id: sensorId })
@@ -140,8 +138,10 @@ route.get('/graphs', async (req, res) => {
                   dataset.push(obj["value"]);
                 }
               }
-              res.render("sensorpage/sensor", {labels: labels,dataset: dataset, sensor: sensor[0].sensorId, sensorDetail: sensor, username: req.session.user[0].username,
-              });
+              res.render("sensorpage/sensor", {labels: labels,dataset: dataset, sensor: sensor[0].sensorId, sensorDetail: sensor, username: req.session.user[0].username, deviceData: device, deviceId:deviceId});
+              limit = defaultLimit;
+              start = defaultStart;
+              end = defaultEnd;
         } catch (error) {
             res.render("sensorpage/sensor", { message: "Error in Fetching data" , username: req.session.user[0].username});
             limit = defaultLimit;
