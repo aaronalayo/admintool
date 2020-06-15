@@ -19,7 +19,7 @@ route.get('/users', checkAdmin, async (req, res) => {
   if(req.session.user) {
     try {  
     const users = await User.query().select().withGraphJoined('role').withGraphJoined('organization');
-    res.render("userspage/users", { userData: users, username: req.session.user[0].username, link: "/user/edit/", linkDelete:'/user/delete/'});
+    res.render("userspage/users", { userData: users, username: req.session.user[0].username, link: "/users/edit/", linkDelete:'/users/delete/'});
   } catch (e) {
     res.render("userspage/users", { message: "Error in Fetching users" , username: req.session.user[0].username});
   }
