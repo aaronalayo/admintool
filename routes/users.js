@@ -13,7 +13,6 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
 const sendEmail = require("../mailer.js");
-const { user } = require('../config/psqlCredentials.js');
 
 route.get('/users', checkAdmin, async (req, res) => {
   if(req.session.user) {
