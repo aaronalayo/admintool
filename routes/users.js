@@ -4,7 +4,7 @@ const User = require('../model/User.js');
 const Device = require('../model/Device.js');
 const Organization = require('../model/Organization.js');
 const Role = require("../model/Role.js");
-const Sensor = require('../model/Sensor.js');
+
 
 const checkAdmin = require("../middleware/checkAdmin.js");
 const check = require('../middleware/check.js');
